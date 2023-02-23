@@ -6,9 +6,11 @@ PROJ=dex
 ORG_PATH=github.com/dexidp
 REPO_PATH=$(ORG_PATH)/$(PROJ)
 
-VERSION ?= $(shell ./scripts/git-version)
+#VERSION ?= $(shell ./scripts/git-version)
+VERSION = v0.0.1
 
-DOCKER_REPO=quay.io/dexidp/dex
+#DOCKER_REPO=quay.io/dexidp/dex
+DOCKER_REPO=docker.io/gainz620/$(PROJ)
 DOCKER_IMAGE=$(DOCKER_REPO):$(VERSION)
 
 $( shell mkdir -p bin )
