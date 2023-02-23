@@ -395,6 +395,7 @@ func (s *Server) handleConnectorCallback(w http.ResponseWriter, r *http.Request)
 		}
 	case http.MethodPost: // SAML POST binding
 		if authID = r.PostFormValue("RelayState"); authID == "" {
+			s.logger.Error("Missing 'RelayState' parameter in SAML POST binding.")
 			s.renderError(r, w, http.StatusBadRequest, "User session error.")
 			return
 		}
