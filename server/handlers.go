@@ -397,7 +397,7 @@ func (s *Server) handleConnectorCallback(w http.ResponseWriter, r *http.Request)
 		if authID = r.PostFormValue("RelayState"); authID == "" {
 			s.logger.Errorf("Missing 'RelayState' parameter in SAML POST binding. authId: %v", authID)
 			//s.renderError(r, w, http.StatusBadRequest, "User session error.")
-			http.Redirect(w, r, "https://world-deploy.zepeto.me", http.StatusSeeOther)
+			http.Redirect(w, r, "https://world-deploy.zepeto.me/applications", http.StatusSeeOther)
 			return
 		}
 	default:
