@@ -7,7 +7,7 @@ ORG_PATH=github.com/dexidp
 REPO_PATH=$(ORG_PATH)/$(PROJ)
 
 #VERSION ?= $(shell ./scripts/git-version)
-VERSION = v0.0.1
+VERSION = v1.0.1
 
 #DOCKER_REPO=quay.io/dexidp/dex
 DOCKER_REPO=docker.io/gainz620/$(PROJ)
@@ -93,7 +93,7 @@ fix: ## Fix lint violations
 
 .PHONY: docker-image
 docker-image:
-	@sudo docker build -t $(DOCKER_IMAGE) .
+	@GOOS=linux GOARCH=amd64 sudo docker build -t $(DOCKER_IMAGE) .
 
 .PHONY: verify-proto
 verify-proto: proto

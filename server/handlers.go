@@ -10,6 +10,7 @@ import (
 	"html/template"
 	"net/http"
 	"net/url"
+	"os"
 	"path"
 	"sort"
 	"strconv"
@@ -28,6 +29,11 @@ import (
 const (
 	codeChallengeMethodPlain = "plain"
 	codeChallengeMethodS256  = "S256"
+)
+
+var (
+	//argoUrl                  = "https://world-deploy.zepeto.me/applications"
+	argoUrl = os.Getenv("ARGO_URL")
 )
 
 func (s *Server) handlePublicKeys(w http.ResponseWriter, r *http.Request) {
@@ -396,8 +402,13 @@ func (s *Server) handleConnectorCallback(w http.ResponseWriter, r *http.Request)
 	case http.MethodPost: // SAML POST binding
 		if authID = r.PostFormValue("RelayState"); authID == "" {
 			s.logger.Errorf("Missing 'RelayState' parameter in SAML POST binding. authId: %v", authID)
-			//s.renderError(r, w, http.StatusBadRequest, "User session error.")
-			http.Redirect(w, r, "https://world-deploy.zepeto.me/applications", http.StatusSeeOther)
+
+			if argoUrl == "" {
+				s.renderError(r, w, http.StatusBadRequest, "User session error.")
+				return
+			}
+
+			http.Redirect(w, r, argoUrl, http.StatusSeeOther)
 			return
 		}
 	default:
